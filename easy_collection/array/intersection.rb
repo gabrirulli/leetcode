@@ -1,42 +1,56 @@
 def intersect(nums1, nums2)
-  array = []
-  obj = {}
+  result = []
+  obj1 = {}
+  obj2 = {}
+  nums1.each do |n|
+    unless obj1[n]
+      obj1[n] = 1
+    else
+      obj1[n] = obj1[n] + 1
+    end
+  end
 
-  # if nums1.length > nums2.length
-    nums1.each do |n|
-      unless obj[n]
-        obj[n] = 1
-      else
-        obj[n] = obj[n] + 1
+  nums2.each do |n|
+    unless obj2[n]
+      obj2[n] = 1
+    else
+      obj2[n] = obj2[n] + 1
+    end
+  end
+
+  if obj1.length < obj2.length
+    obj1.each do |k, v|
+      if obj2.key?(k)
+        if obj2[k] < obj1[k]
+          obj2[k].times do
+            result << k
+          end
+        else
+          v.times do
+            result << k
+          end
+        end
       end
     end
-
-    nums2.each do |n|
-      if obj[n]
-        array << n
+  else
+    obj2.each do |k, v|
+      if obj1.key?(k)
+        if obj1[k] < obj2[k]
+          obj1[k].times do
+            result << k
+          end
+        else
+          v.times do
+            result << k
+          end
+        end
       end
     end
+  end
 
-  # else
-  #   nums2.each do |n|
-  #     unless obj[n]
-  #       obj[n] = 1
-  #     else
-  #       obj[n] = obj[n] + 1
-  #     end
-  #   end
-  #
-  #   nums1.each do |n|
-  #     if obj[n]
-  #       array << n
-  #     end
-  #   end
-  # end
-
-  p obj
-  p array
+  p result
 end
 
-nums1 = [1,2,1]
+nums1 = [1,2,2,1]
 nums2 = [2,2]
 intersect(nums1, nums2)
